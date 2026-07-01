@@ -1,6 +1,7 @@
 # Capstone_project_Radhika
-# Data Science Capstone - Part 1: Data Preparation & Exploration
+# Capstone - Part 1: Data Preparation & Exploration
 **Author:** Radhika
+Note : I have uploaded the dataset to my part1 folder in Final_Capstoneproj_Radhika repository. I have added this path to my code. Also you can download the file.
 **Project Stage:** Part 1 Deliverable
 ## 1. Project Overview & Objective
 This project focuses on building an end-to-end machine learning pipeline to predict used car prices using historical listings data. Part 1 establishes clean, reliable data structures by resolving messy string formats, eliminating duplicates, downcasting categories to reduce memory, and analyzing underlying statistical skewness and outliers.
