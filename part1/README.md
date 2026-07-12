@@ -1,23 +1,28 @@
 # Capstone_project_Radhika
-# Capstone - Part 1: Data Preparation & Exploration
-**Author:** Radhika
-Note : I have uploaded the dataset to my part1 folder in Final_Capstoneproj_Radhika repository. I have added this path to my code. Also you can download the file.
+# Part 1: Data Preparation & Exploration
+
+Note : I have uploaded the dataset to my part1 folder in Final_Capstoneproj_Radhika repository. I have added this path to my code. 
+
 **Project Stage:** Part 1 Deliverable
 ## 1. Project Overview & Objective
 This project focuses on building an end-to-end machine learning pipeline to predict used car prices using historical listings data. Part 1 establishes clean, reliable data structures by resolving messy string formats, eliminating duplicates, downcasting categories to reduce memory, and analyzing underlying statistical skewness and outliers.
+
 ## 2. Feature Selection & Data Cleanup
 - **Dropped Columns:** The `torque` column was intentionally dropped from the dataset. It contained unstructured text arrays (e.g., `"190Nm@ 2000rpm"`) requiring complex regex parsing, while its underlying predictive value was already captured cleaner by the `engine` (CC) and `max_power` (bhp) features.
 - **Data Transformations:** Removed textual units (`kmpl`, `CC`, `bhp`) from `mileage`, `engine`, and `max_power` and converted them into clean, continuous floating-point variables using `pd.to_numeric()`.
+- 
 ## 3. Duplicate Detection & Data Quality
 - **Identification Method:** Checked complete row duplications across all combined attributes via `df.duplicated().sum()`.
 - **Rows Removed:** A total of **1,202 duplicate rows** were dropped using `df.drop_duplicates()`, scaling the unique dataset down to **6,926 records**.
 - **Null Percentage Impact:** Dropping duplicate records updated both the missing cell count and total row count dynamically, keeping column null percentages uniform without distorting structural integrity.
+- 
 ## 4. Optimization & Memory Usage
 - **Categorical Downcasting:** High-repetition string columns (`fuel`, `transmission`, and `owner`) were optimized into the `category` data type via `.astype('category')`.
 - **Memory Reduction Report:**
   - **Before Optimization:** ~4.05 MB
   - **After Optimization:** ~1.43 MB
   - **Total Processing Efficiency Gain:** **64.71% memory savings**, allowing quicker matrix calculations during training.
+  - 
 ## 5. Statistical Analysis & Skewness Profiling
 A programmatic distribution scan using `df[col].skew()` returned the following insights for our core metrics:
 - `km_driven`: 11.1709 (Extreme Positive Skew)
@@ -27,6 +32,7 @@ A programmatic distribution scan using `df[col].skew()` returned the following i
 - `mileage`: -0.1732 (Slight Negative Skew)
 ### Mean vs. Median Imputation Risks:
 Because columns like our target `selling_price` and operational `km_driven` contain massive right-skewed profiles, a mathematical **Mean** calculation is heavily pulled upward by extreme outliers (luxury sports cars/commercial vehicles). If we used a biased Mean to fill missing entries, it would artificially overestimate values for standard consumer cars. Therefore, the **Median** is mathematically required as our robust center point.
+
 ## 6. Outlier Assessment Strategy (IQR Method)
 Using the Interquartile Range ($IQR = Q3 - Q1$) threshold with lower/upper bounds ($Q1 - 1.5 \times IQR$ and $Q3 + 1.5 \times IQR$), outliers were profiled across our two primary metrics:
 - **`selling_price` Outliers Detected:** 
@@ -37,7 +43,7 @@ Outliers will **NOT** be dropped. High-value luxury cars and ultra-high-mileage 
 - **Feature Visualized:** `selling_price` (Identified as a highly skewed numeric target column).
 - **Configuration:** Generated using `sns.histplot()` split into exactly 20 data bins.
 - **Shape Description:** The distribution displays a severe **right-skewed (positive skew)** profile. The tall, massive tower on the far left shows that the vast majority of used cars cluster tightly within lower, budget-friendly consumer price brackets. As we move right across the X-axis, the graph rapidly thins out into a long, flat tail, indicating a tiny handful of ultra-premium luxury vehicles or exotic sports cars with exceptionally high price tags stretching out the scale.
-### 🔵 Scatter Plot Correlation Analysis
+### Scatter Plot Correlation Analysis
 - **Features Visualized:** `max_power` (Independent Variable on X-Axis) vs. `selling_price` (Target Variable on Y-Axis).
 - **Configuration:** Generated using `sns.scatterplot()`.
 - **Direction & Strength Interpretation:** - **Direction:** The plot exhibits a clear **positive relationship** (as you move from left to right, the points trend upwards). This confirms that vehicles engineered with higher engine horsepower consistently command higher resale market values.
@@ -67,17 +73,15 @@ Both `selling_price` and `km_driven` are heavily **positively skewed (right-skew
 
 #### Top 3 Discrepancy Pairs Breakdown
 
-1. **[Insert Column Pair 1, e.g., selling_price & km_driven]**
-   - **(a) Relationship Classification:** [If |Spearman| > |Pearson|: **Monotonic but Non-Linear**. The variables move together consistently but not at a fixed proportional rate, causing Pearson's linear metric to underestimate the true relationship strength. / If |Pearson| >= |Spearman|: **Approximately Linear**.]
+- **(a) Relationship Classification:** [If |Spearman| > |Pearson|: **Monotonic but Non-Linear**. The variables move together consistently but not at a fixed proportional rate, causing Pearson's linear metric to underestimate the true relationship strength. / If |Pearson| >= |Spearman|: **Approximately Linear**.]
    - **(b) Feature-Selection Guidance Selection:** We will rely on the **[Spearman / Pearson]** coefficient because it captures the true underlying [non-linear / linear] dynamics without being skewed or suppressed by scaling transformations or outliers.
 
-2. **[Insert Column Pair 2, e.g., selling_price & max_power]**
-   - **(a) Relationship Classification:** [If |Spearman| > |Pearson|: **Monotonic but Non-Linear**. The values move sequentially in step together but scale exponentially or logarithmically rather than along a straight line. / If |Pearson| >= |Spearman|: **Approximately Linear**.]
+- **(a) Relationship Classification:** [If |Spearman| > |Pearson|: **Monotonic but Non-Linear**. The values move sequentially in step together but scale exponentially or logarithmically rather than along a straight line. / If |Pearson| >= |Spearman|: **Approximately Linear**.]
    - **(b) Feature-Selection Guidance Selection:** We will rely on the **[Spearman / Pearson]** coefficient for Part 2 feature prioritization, ensuring our models do not prematurely discard highly predictable non-linear features.
 
-3. **[Insert Column Pair 3, e.g., km_driven & year]**
-   - **(a) Relationship Classification:** [If |Spearman| > |Pearson|: **Monotonic but Non-Linear**. / If |Pearson| >= |Spearman|: **Approximately Linear**.]
-   - **(b) Feature-Selection Guidance Selection:** We will utilize the **[Spearman / Pearson]** index because it provides a more accurate reflection of feature importance when feeding algorithms capable of mapping complex relationships.
+- **(a) Relationship Classification:** [If |Spearman| > |Pearson|: **Monotonic but Non-Linear**. / If |Pearson| >= |Spearman|: **Approximately Linear**.]
+- **(b) Feature-Selection Guidance Selection:** We will utilize the **[Spearman / Pearson]** index because it provides a more accurate reflection of feature importance when feeding algorithms capable of mapping complex relationships.
+- 
 ### Grouped Aggregation Analysis
 - **Execution Summary:** Grouped the cleaned dataset by the categorical feature `transmission` to inspect summary statistics (`mean`, `std`, `count`) against the target numeric variable `selling_price`.
 
