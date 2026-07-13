@@ -1,5 +1,9 @@
 # Part 2: Supervised Machine Learning Model
 
+# Prerequisites:
+I have uploaded the cleaned used cars dataset (cleaned_data.csv) in the part2 repository as referenced in the notebook code which i got as a output of part 1. Link for cleaned dataset is given below https://github.com/552radhika-Dev/Final_Capstoneproj_Radhika/blob/main/part2/cleaned_data.csv
+
+
 # Task 1: Label and Feature Matrix
 Feature Matrix (X): Consists of all independent features from `cleaned_data.csv` used to predict car values, with the continuous target column and the nominal column excluded. 
 Regression Label (y_reg):Defined as the continuous numeric variable `selling_price` representing the raw transaction cost of the used car.
