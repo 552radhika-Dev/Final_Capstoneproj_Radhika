@@ -1,5 +1,11 @@
-# Capstone_project_Radhika
-# Part 1: Data Preparation & Exploration
+# Part 1 — Data Acquisition, Cleaning, and Exploratory Analysis 
+
+Prerequisites: I have uploaded the raw uncleaned used cars dataset (Cardetails_dataset.csv) in the part1 repository as referenced in the notebook code.
+
+Deliverable: The notebook produces cleaned_data.csv file, which serves as the foundation for the next part.i.e.,Part2.
+
+
+# Data Preparation & Exploration
 
 Note : I have uploaded the dataset to my part1 folder in Final_Capstoneproj_Radhika repository. I have added this path to my code. 
 
@@ -10,19 +16,19 @@ This project focuses on building an end-to-end machine learning pipeline to pred
 ## 2. Feature Selection & Data Cleanup
 - **Dropped Columns:** The `torque` column was intentionally dropped from the dataset. It contained unstructured text arrays (e.g., `"190Nm@ 2000rpm"`) requiring complex regex parsing, while its underlying predictive value was already captured cleaner by the `engine` (CC) and `max_power` (bhp) features.
 - **Data Transformations:** Removed textual units (`kmpl`, `CC`, `bhp`) from `mileage`, `engine`, and `max_power` and converted them into clean, continuous floating-point variables using `pd.to_numeric()`.
-- 
+
 ## 3. Duplicate Detection & Data Quality
 - **Identification Method:** Checked complete row duplications across all combined attributes via `df.duplicated().sum()`.
 - **Rows Removed:** A total of **1,202 duplicate rows** were dropped using `df.drop_duplicates()`, scaling the unique dataset down to **6,926 records**.
 - **Null Percentage Impact:** Dropping duplicate records updated both the missing cell count and total row count dynamically, keeping column null percentages uniform without distorting structural integrity.
-- 
+
 ## 4. Optimization & Memory Usage
 - **Categorical Downcasting:** High-repetition string columns (`fuel`, `transmission`, and `owner`) were optimized into the `category` data type via `.astype('category')`.
 - **Memory Reduction Report:**
   - **Before Optimization:** ~4.05 MB
   - **After Optimization:** ~1.43 MB
   - **Total Processing Efficiency Gain:** **64.71% memory savings**, allowing quicker matrix calculations during training.
-  - 
+  
 ## 5. Statistical Analysis & Skewness Profiling
 A programmatic distribution scan using `df[col].skew()` returned the following insights for our core metrics:
 - `km_driven`: 11.1709 (Extreme Positive Skew)
@@ -67,7 +73,7 @@ Both `selling_price` and `km_driven` are heavily **positively skewed (right-skew
 - In a positively skewed distribution, the column **mean** is significantly pulled upward and distorted by a tiny handful of extremely large outliers (e.g., ultra-luxury sports cars or rare million-kilometer fleet vehicles). 
 - Using an artificially inflated mean to fill in missing values would systematically bias our entire dataset upwards. 
 - Therefore, the **median** was chosen as the most robust and representative metric of central tendency because it is completely unaffected by extreme tail values. Missing records were successfully handled using `.fillna()`, and final verification via `.isnull().sum()` confirms zero missing entries remain.
-- 
+
 ### Spearman Rank vs. Pearson Correlation Analysis
 - **Execution Summary:** Generated the rank-based Spearman correlation matrix (`df.corr(method='spearman')`) and compared it against the linear Pearson matrix to diagnose non-linear monotonic trends.
 
@@ -81,7 +87,7 @@ Both `selling_price` and `km_driven` are heavily **positively skewed (right-skew
 
 - **(a) Relationship Classification:** [If |Spearman| > |Pearson|: **Monotonic but Non-Linear**. / If |Pearson| >= |Spearman|: **Approximately Linear**.]
 - **(b) Feature-Selection Guidance Selection:** We will utilize the **[Spearman / Pearson]** index because it provides a more accurate reflection of feature importance when feeding algorithms capable of mapping complex relationships.
-- 
+
 ### Grouped Aggregation Analysis
 - **Execution Summary:** Grouped the cleaned dataset by the categorical feature `transmission` to inspect summary statistics (`mean`, `std`, `count`) against the target numeric variable `selling_price`.
 
