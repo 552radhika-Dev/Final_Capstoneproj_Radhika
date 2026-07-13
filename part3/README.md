@@ -1,3 +1,12 @@
+# Part 3 — Advanced Modeling — Ensembles, Tuning, and Full ML Pipeline
+
+# Pre-requisites:
+I uploaded the scaled (X_train and X_test) , y_clf_train and y_clf_test files in NPY format in the part 3 repository which i got as a output of part 2.
+
+# Deliverables:
+The notebook produces a trained model file (best_model.pkl).
+It generates a comprehensive evaluation report, including regression metrics (MSE, $R^2$), classification metrics (Confusion Matrix, Precision, Recall, F1-Score), an ROC/AUC plot, and a threshold sensitivity analysis table
+
 # Task1: Decision Tree Baseline
 # Overfitting Evaluation: 
 Yes, the baseline Decision Tree shows severe signs of overfitting. It achieved a Training Accuracy of 100.00% but a significantly lower Testing Accuracy of 82.14%. This large gap proves the model has memorized the training data rather than generalizing well to unseen patterns.Why Decision Trees are High-Variance: Decision Trees are high-variance models because they make split choices greedily at each node, optimizing solely for immediate data isolation without looking ahead or revisiting past decisions. Without depth constraints, they continuously build complex, unique branches for every outlier and noise point in the training dataset, causing the final structure to change drastically given even minor changes in the input data.
