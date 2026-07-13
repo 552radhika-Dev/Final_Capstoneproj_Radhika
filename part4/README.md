@@ -1,4 +1,8 @@
 # Part 4: LLM-Powered Feature: Model Prediction Explanation
+# Setting up API Key
+Create a .env file using the provided sample.env template and add your own OpenRouter API credentials, or Run the notebook without a .env file. The notebook will automatically prompt you to securely enter: LLM_API_KEY LLM_API_URL (press Enter to use the default value) LLM_MODEL (press Enter to use the default model)
+
+Once the required configuration is provided, the notebook will execute successfully and reproduce the results presented in this project.
 
 # Prerequisites: 
 Requires the best_model.pkl created in Part 3.
