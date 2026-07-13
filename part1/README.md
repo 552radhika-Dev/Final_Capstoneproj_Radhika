@@ -1,7 +1,8 @@
 # Part 1 — Data Acquisition, Cleaning, and Exploratory Analysis 
 
 # Prerequisites: 
-I have uploaded the raw uncleaned used cars dataset (Cardetails_dataset.csv) in the part1 repository as referenced in the notebook code. Link for raw dataset is given below
+I have uploaded the raw uncleaned used cars dataset (Cardetails_dataset.csv) in the part1 repository as referenced in the notebook code. 
+Link for raw dataset is given below
 https://github.com/552radhika-Dev/Final_Capstoneproj_Radhika/blob/main/part1/Cardetails_dataset.csv
 
 # Deliverable:
